@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stopwatch</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        #display {
+            font-size: 4rem;
+            font-weight: bold;
+            background: #222;
+            color: #0f0;
+            padding: 20px 40px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            letter-spacing: 2px;
+        }
+
+        button {
+            padding: 12px 25px;
+            margin: 0 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .start {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .start:hover {
+            background-color: #45a049;
+        }
+
+        .stop {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .stop:hover {
+            background-color: #d7372e;
+        }
+
+        .reset {
+            background-color: #008CBA;
+            color: white;
+        }
+
+        .reset:hover {
+            background-color: #007bb5;
+        }
+
+        @media (max-width: 500px) {
+            #display {
+                font-size: 2.5rem;
+                padding: 15px 30px;
+            }
+
+            button {
+                margin: 5px 5px;
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h2>Stopwatch</h2>
+    <p id="display">00:00</p>
+
+    <div>
+        <button onclick="start()" class="start">Start</button>
+        <button onclick="stop()" class="stop">Stop</button>
+        <button onclick="reset()" class="reset">Reset</button>
+    </div>
+
+    <script>
+        let second = 0;
+        let intervalId = null;
+
+        function updateDisplay(){
+            const mins = String(Math.floor(second / 60)).padStart(2, "0");
+            const secs = String(second % 60).padStart(2, "0");
+            document.getElementById("display").innerText = `${mins}:${secs}`; 
+        }
+
+        function start(){
+            if (!intervalId){
+                intervalId = setInterval(() => {
+                    second++;
+                    updateDisplay();
+                }, 1000);
+            }
+        }
+
+        function stop(){
+            clearInterval(intervalId);
+            intervalId = null;
+        }
+
+        function reset(){
+            stop();
+            second = 0;
+            updateDisplay();
+        }
+        updateDisplay();
+    </script>
+</body>
+</html>
